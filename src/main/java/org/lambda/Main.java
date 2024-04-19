@@ -2,18 +2,14 @@ package org.lambda;
 
 import org.lambda.patterns.observer.Observer;
 import org.lambda.patterns.observer.impl.ObservedImpl;
-import org.lambda.patterns.observer.impl.ObserverImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -43,22 +39,7 @@ public class Main {
         );
     }
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
-        /*
-        * Вариант если синхронизируются пользователи после добавления новых
-        * */
-
-        List<User> inputFromAnyService = Arrays.asList(
-                new User(1, "kamegatze", "sh", "al", "pl"),
-                new User(2, "sap", "sh", "al", "pl"),
-                new User(3, "kamegatze", "sh", "al", "pl"),
-                new User(4, "km", "sh", "al", "pl"),
-                new User(5, "kamegatze", "sh", "al", "pl"),
-                new User(6, "kamegatze", "sh", "al", "pl"),
-                new User(7, "opl", "sh", "al", "pl"),
-                new User(8, "kamegatze", "sh", "al", "pl")
-        );
-
+    private static Set<User> getUsersFromDatabase() {
         List<User> inputFromDatabase = Arrays.asList(
                 new User(1, "kamegatze", "sh", "al", "pl"),
                 new User(2, "kamegatze", "sh", "al", "pl"),
@@ -69,8 +50,30 @@ public class Main {
                 new User(7, "kamegatze", "sh", "al", "pl"),
                 new User(8, "kamegatze", "sh", "al", "pl")
         );
+        return new HashSet<>(inputFromDatabase);
+    }
 
-        Set<User> inputFromDatabaseSet = new HashSet<>(inputFromDatabase);
+    private static List<User> getUsersFromAnyService() {
+        return Arrays.asList(
+                new User(1, "kamegatze", "sh", "al", "pl"),
+                new User(2, "sap", "sh", "al", "pl"),
+                new User(3, "kamegatze", "sh", "al", "pl"),
+                new User(4, "km", "sh", "al", "pl"),
+                new User(5, "kamegatze", "sh", "al", "pl"),
+                new User(6, "kamegatze", "sh", "al", "pl"),
+                new User(7, "opl", "sh", "al", "pl"),
+                new User(8, "kamegatze", "sh", "al", "pl")
+        );
+    }
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        /*
+        * Вариант если синхронизируются пользователи после добавления новых
+        * */
+
+        List<User> inputFromAnyService = getUsersFromAnyService();
+
+        Set<User> inputFromDatabaseSet = getUsersFromDatabase();
 
         List<User> notInDatabase = new ArrayList<>();
         /*
